@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt-nodejs");
 const cors = require("cors");
 const knex = require("knex");
+const app = express();
 
 const register = require('./Controllers/register');
 const signin = require('./Controllers/signin');
@@ -20,10 +21,10 @@ const db = knex({
   },
 });
 
-const app = express();
+
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get("/", (req, res) => {res.send(db.users);});
 app.post("/signin", signin.handleSignin(db, bcrypt));
@@ -33,5 +34,5 @@ app.put("/image", (req, res) => { image.handleImage(req, res, db)});
 app.post("/imageurl", (req, res) => { image.handleApiCall(req, res)});
 
 app.listen(3000, () => {
-  console.log("App is running on port 3000");
+  console.log("App is running");
 });
